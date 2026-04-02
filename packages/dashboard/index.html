@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foreman | Distributed Task Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <canvas id="matrix-canvas"></canvas>
+    
+    <header class="metrics-bar">
+      <div class="metric-group">
+        <span class="metric-label">Throughput / sec</span>
+        <span class="metric-value" id="val-throughput">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="metric-label">Tasks Processed</span>
+        <span class="metric-value" id="val-processed">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="metric-label">P99 Latency (ms)</span>
+        <span class="metric-value" id="val-p99">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="metric-label">Queue Depth</span>
+        <span class="metric-value" id="val-queue">0</span>
+      </div>
+      <div class="metric-group">
+        <span class="metric-label">System Health</span>
+        <span class="metric-value" id="val-health" style="color: var(--success)">OPTIMAL</span>
+      </div>
+    </header>
+
+    <div class="actions-bar">
+      <div class="input-group">
+        <button id="btn-batch" class="btn-primary">INIT BATCH RUN (100 TASKS)</button>
+        <button id="btn-stress" class="btn-ghost">STRESS TEST (10k)</button>
+      </div>
+      <div class="input-group">
+        <div class="input-terminal-prefix">
+          <input type="text" id="task-input" placeholder="ENTER TASK COMMAND...">
+        </div>
+        <select id="priority-select">
+          <option value="1">CRITICAL</option>
+          <option value="2">HIGH</option>
+          <option value="3" selected>NORMAL</option>
+          <option value="4">LOW</option>
+          <option value="5">BACKGROUND</option>
+        </select>
+        <button id="btn-add" class="btn-ghost" style="border-color: var(--primary-accent); color: var(--primary-accent);">SUBMIT</button>
+      </div>
+    </div>
+
+    <main>
+      <h2 class="section-header">WORKER POOL STATUS</h2>
+      <div id="workers-grid" class="workers-grid">
+        <!-- Worker cards will be injected here -->
+      </div>
+    </main>
+
+    <div class="gantt-timeline" id="gantt-container">
+      <div class="gantt-header">LIVE TASK TIMELINE</div>
+      <div id="gantt-tracks"></div>
+    </div>
+
+    <div id="toast" class="terminal-toast"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
