@@ -13,10 +13,10 @@ server.register(cors, { origin: '*' });
 server.register(websocket);
 
 server.register(async (fastify) => {
-  fastify.get('/ws', { websocket: true }, (connection, req) => {
+  fastify.get('/ws', { websocket: true }, (socket: any, req) => {
     
     const broadcast = (msg: any) => {
-      connection.socket.send(JSON.stringify(msg));
+      socket.send(JSON.stringify(msg));
     };
 
     const onQueued = (t: any) => broadcast({ type: 'taskQueued', payload: t });
@@ -33,7 +33,7 @@ server.register(async (fastify) => {
       broadcast({ type: 'metricsUpdate', payload: scheduler.getSnapshot() });
     }, 500);
 
-    connection.socket.on('close', () => {
+    socket.on('close', () => {
       scheduler.off('taskQueued', onQueued);
       scheduler.off('taskStarted', onStarted);
       scheduler.off('taskCompleted', onCompleted);
@@ -89,7 +89,7 @@ const start = async () => {
     await server.listen({ port: 3001, host: '0.0.0.0' });
     console.log('Server listening on http://localhost:3001');
   } catch (err) {
-    server.log.error(err);
+    console.error('Server failed to start:', err);
     process.exit(1);
   }
 };
