@@ -101,7 +101,7 @@ const showToast = (msg: string) => {
 };
 
 // --- API & WebSocket ---
-const ws = new WebSocket('ws://localhost:3001/ws');
+const ws = new WebSocket('ws://127.0.0.1:3001/ws');
 
 interface TaskPayload {
   id: string;
@@ -287,7 +287,7 @@ ws.onmessage = (event) => {
 // UI Triggers
 document.getElementById('btn-batch')?.addEventListener('click', async () => {
   showToast('INITIATING BATCH RUN: 100 TASKS');
-  await fetch('http://localhost:3001/api/tasks/batch', {
+  await fetch('http://127.0.0.1:3001/api/tasks/batch', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ count: 100 })
@@ -296,7 +296,7 @@ document.getElementById('btn-batch')?.addEventListener('click', async () => {
 
 document.getElementById('btn-stress')?.addEventListener('click', async () => {
   showToast('STRESS TEST INITIATED. BRACE FOR IMPACT');
-  await fetch('http://localhost:3001/api/tasks/batch', {
+  await fetch('http://127.0.0.1:3001/api/tasks/batch', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ count: 10000, priority: 1 })
@@ -311,7 +311,7 @@ document.getElementById('btn-add')?.addEventListener('click', async () => {
   const type = input.value;
   showToast(`SUBMITTING: ${type}`);
   
-  await fetch('http://localhost:3001/api/tasks', {
+  await fetch('http://127.0.0.1:3001/api/tasks', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ type, priority: parseInt(prio.value), payload: { latency: 50, failRate: 0.1 } })

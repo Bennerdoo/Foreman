@@ -1,0 +1,1 @@
+{"version":3,"file":"LoadBalancer.d.ts","sourceRoot":"","sources":["../../src/balancer/LoadBalancer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,yBAAyB,CAAC;AAExD,qBAAa,YAAY;IACX,OAAO,CAAC,OAAO;gBAAP,OAAO,EAAE,aAAa,EAAE;IAE5C,kBAAkB,IAAI,aAAa,GAAG,SAAS;CAOhD"}

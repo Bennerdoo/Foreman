@@ -9,7 +9,14 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
+    "composite": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@foreman/*": [
+        "packages/*/src"
+      ]
+    }
   }
 }

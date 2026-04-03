@@ -17,7 +17,11 @@ export class WorkerWrapper {
   public status: WorkerStatus = 'IDLE';
 
   constructor(public id: string, public maxTasks: number, private onMessage: (msg: any) => void) {
-    this.worker = new Worker(path.join(__dirname, 'taskRunner.js'));
+    const isTsNode = !!(process as any)[Symbol.for('ts-node.register.instance')] || process.env.TS_NODE_DEV === 'true' || __filename.endsWith('.ts');
+    const ext = isTsNode ? '.ts' : '.js';
+    const workerOptions = isTsNode ? { execArgv: ['-r', 'ts-node/register', '-r', 'tsconfig-paths/register'] } : {};
+    
+    this.worker = new Worker(path.join(__dirname, `taskRunner${ext}`), workerOptions);
     
     this.worker.on('message', (msg) => {
       this.activeTasks--;
